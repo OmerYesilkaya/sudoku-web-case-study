@@ -7,7 +7,7 @@ import { ChakraProvider, extendTheme, ThemeConfig } from "@chakra-ui/react";
 const styles = {
 	global: {
 		body: {
-			fontFamily: "Secular One, sans-serif;",
+			fontFamily: "Atkinson Hyperlegible",
 			color: "#e9f7fa",
 			bg: "gray.800",
 		},
