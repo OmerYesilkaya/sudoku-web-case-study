@@ -12,10 +12,10 @@ export default function GamePreview({ game }: Props) {
 
 	return (
 		<Flex direction="column" align="center">
-			<Grid border="1px solid white" templateColumns="repeat(9, 1fr)" templateRows="repeat(9, 1fr)" fontSize="sm">
-				{flatten2D(game.grid).map((number) => (
-					<Center key={game.id} border="1px solid white" w="20px" h="20px" color={number === 0 ? "gray.500" : "gray.400"}>
-						{number === 0 ? "X" : number}
+			<Grid border="1px solid" borderColor="gray.500" templateColumns="repeat(9, 1fr)" templateRows="repeat(9, 1fr)" fontSize="sm">
+				{flatten2D(game.grid).map((number, idx) => (
+					<Center key={`grid-${idx}`} border="1px solid" borderColor="gray.500" w="20px" h="20px" color="gray.300">
+						{number === 0 ? "" : number}
 					</Center>
 				))}
 			</Grid>

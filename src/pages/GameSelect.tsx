@@ -10,7 +10,7 @@ export default function GameSelect() {
 				<Header>Select a game</Header>
 				<Grid templateColumns="repeat(3, 1fr)" templateRows="repeat(3, 1fr)" gap="1em" mt="1em">
 					{games.map((game) => (
-						<GamePreview key={game.id} game={game} />
+						<GamePreview key={`game-${game.id}`} game={game} />
 					))}
 				</Grid>
 			</Flex>
