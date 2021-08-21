@@ -1,4 +1,6 @@
+import { Cell } from "./Cell";
+
 export type SudokuGame = {
 	id: number;
-	grid: number[][];
+	grid: Cell[][];
 };
