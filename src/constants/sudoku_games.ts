@@ -1,6 +1,8 @@
-import { SudokuGame } from "models/SudokuGame";
-
-export const games: SudokuGame[] = [
+export type SudokuData = {
+	id: number;
+	grid: number[][];
+};
+export const games: SudokuData[] = [
 	{
 		id: 0,
 		grid: [
