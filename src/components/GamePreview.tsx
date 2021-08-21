@@ -1,14 +1,16 @@
 import { Button, Center, Flex, Grid } from "@chakra-ui/react";
-import { SudokuGame } from "models/SudokuGame";
+import { SudokuData } from "constants/sudoku_games";
 import { useHistory } from "react-router-dom";
+import { useSudokuStore } from "store/useSudokuStore";
 import flatten2D from "utils/flatten2D";
 
 type Props = {
-	game: SudokuGame;
+	game: SudokuData;
 };
 
 export default function GamePreview({ game }: Props) {
 	const history = useHistory();
+	const { removeCurrentGame } = useSudokuStore((state) => ({ removeCurrentGame: state.removeCurrentGame }));
 
 	return (
 		<Flex direction="column" align="center">
@@ -19,7 +21,14 @@ export default function GamePreview({ game }: Props) {
 					</Center>
 				))}
 			</Grid>
-			<Button mt="1em" colorScheme="green" onClick={() => history.push(`/sudoku/${game.id}`)}>
+			<Button
+				mt="1em"
+				colorScheme="green"
+				onClick={() => {
+					removeCurrentGame();
+					history.push(`/sudoku/${game.id}`);
+				}}
+			>
 				Sudoku {game.id}
 			</Button>
 		</Flex>
