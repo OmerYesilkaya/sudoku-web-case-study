@@ -1,5 +1,5 @@
-export default function flatten2D(grid: number[][]): number[] {
+export default function flatten2D(grid: any[][]): any[] {
 	return grid.reduce((acc, cur) => {
-		return [...acc, ...cur] as number[];
-	}, [] as number[]);
+		return [...acc, ...cur] as any[];
+	}, [] as any[]);
 }
