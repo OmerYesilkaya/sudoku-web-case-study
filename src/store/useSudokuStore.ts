@@ -5,7 +5,7 @@ import { SudokuGame } from "models/SudokuGame";
 import flatten2D from "utils/flatten2D";
 import toReadableTime from "utils/toReadableTime";
 import { generateId } from "utils/generateId";
-import checkValidity from "utils/sudoku/checkValidity";
+import checkValidity from "utils/checkValidity";
 import create from "zustand";
 import { persist } from "zustand/middleware";
 import deepCopy from "utils/deepCopy";
@@ -33,6 +33,7 @@ type SudokuStoreProps = {
 export const useSudokuStore = create<SudokuStoreProps>(
 	persist(
 		(set, get) => ({
+			// STATES
 			activeCell: {} as Cell,
 			timePassed: 0,
 			gameHistory: [] as GameHistory[],
@@ -40,7 +41,7 @@ export const useSudokuStore = create<SudokuStoreProps>(
 			gameState: [] as SudokuGame[],
 			t: 0,
 
-			// game state management functions
+			// ACTIONS
 			redo: () => {
 				if (get().t === get().gameState.length - 1) return;
 				set((prev) => ({ t: prev.t + 1, currentGame: prev.gameState[prev.t + 1] }));
@@ -54,7 +55,6 @@ export const useSudokuStore = create<SudokuStoreProps>(
 				const game = get().currentGame;
 				if (!game) return;
 				const targetCell = flatten2D(game.grid).filter((cell) => cell.id === id);
-
 				if (!targetCell) return;
 
 				set(() => ({ activeCell: targetCell[0] }));
@@ -65,6 +65,8 @@ export const useSudokuStore = create<SudokuStoreProps>(
 				const currentGame = get().currentGame;
 				if (!currentGame) return;
 				const copy = { ...currentGame };
+
+				// Note: I had to create a `deep-copy` of this nested array because normal spread operator {...} wasn't enough.
 				copy.grid = deepCopy(currentGame.grid);
 				copy.grid[activeCell.row][activeCell.col].number = number;
 
@@ -111,7 +113,7 @@ export const useSudokuStore = create<SudokuStoreProps>(
 					}
 				}
 
-				set((prev) => ({ gameState: [{ id: id, grid: board }], t: 0, currentGame: { id: id, grid: board } }));
+				set(() => ({ gameState: [{ id: id, grid: board }], t: 0, currentGame: { id: id, grid: board } }));
 			},
 			setCurrentGame: (game: SudokuGame) => set(() => ({ currentGame: game })),
 			incrementTime: () => set((prev) => ({ timePassed: prev.timePassed + 1 })),
