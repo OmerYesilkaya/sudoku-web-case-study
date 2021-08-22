@@ -14,7 +14,7 @@ export default function GameHistory() {
 				<Flex direction="column" w="100%">
 					{gameHistory.length > 0 ? (
 						gameHistory.map((game) => (
-							<Flex borderRadius="md" color="gray.900" mb="0.3em" bg="gray.300" py="1em" px="1.5em" key={game.id} w="100%">
+							<Flex key={game.id} borderRadius="md" color="gray.900" mb="0.3em" bg="gray.300" py="1em" px="1.5em" w="100%">
 								Sudoku {game.id}
 								<Text ml="auto">{game.time}</Text>
 							</Flex>

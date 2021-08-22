@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Grid, useMediaQuery } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSudokuStore } from "store/useSudokuStore";
@@ -11,6 +11,7 @@ type Param = {
 export default function Board() {
 	const { id } = useParams<Param>();
 	const canvasSize = (3 * window.innerHeight) / 4;
+	const [largerThan1000px] = useMediaQuery("(min-width: 1500px)");
 	const { activeCell, setActiveCell, loadGame, currentGame } = useSudokuStore(
 		(state) => ({
 			loadGame: state.loadGame,
@@ -43,7 +44,7 @@ export default function Board() {
 								border={activeCell.id === cell.id ? "2px dashed" : "1px solid"}
 								borderColor={activeCell.id === cell.id ? "gray.300" : "gray.500"}
 								bgColor={cell.isValid ? "transparent" : "red.800"}
-								fontSize="4xl"
+								fontSize={largerThan1000px ? "4xl" : "3xl"}
 								fontWeight="black"
 								cursor={!cell.isStartCell ? "pointer" : "default"}
 								onClick={!cell.isStartCell ? () => setActiveCell(cell.id) : () => {}}

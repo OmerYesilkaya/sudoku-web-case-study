@@ -36,7 +36,7 @@ export const useSudokuStore = create<SudokuStoreProps>(
 			activeCell: {} as Cell,
 			timePassed: 0,
 			gameHistory: [] as GameHistory[],
-			currentGame: {} as SudokuGame,
+			currentGame: null,
 			gameState: [] as SudokuGame[],
 			t: 0,
 

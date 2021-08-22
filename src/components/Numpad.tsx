@@ -1,14 +1,16 @@
-import { Button, Flex, Grid, GridItem, useToast } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, useToast } from "@chakra-ui/react";
+import { RiArrowGoBackLine, RiArrowGoForwardLine, RiCheckDoubleFill } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 import { useSudokuStore } from "store/useSudokuStore";
 
 export default function Numpad() {
-	const { updateActiveCell, checkGame, addToGameHistory, removeCurrentGame, undo } = useSudokuStore((state) => ({
+	const { updateActiveCell, checkGame, addToGameHistory, removeCurrentGame, undo, redo } = useSudokuStore((state) => ({
 		updateActiveCell: state.updateActiveCell,
 		checkGame: state.checkGame,
 		addToGameHistory: state.addToGameHistory,
 		removeCurrentGame: state.removeCurrentGame,
 		undo: state.undo,
+		redo: state.redo,
 	}));
 	const toast = useToast();
 	const history = useHistory();
@@ -56,18 +58,26 @@ export default function Numpad() {
 					</Button>
 				))}
 				<GridItem gridColumn="1 / 4" w="100%" h="100%">
-					<Button colorScheme="teal" w="100%" fontSize="3xl" h="100%" onClick={() => updateActiveCell(0)}>
+					<Button colorScheme="teal" w="100%" fontSize="2xl" onClick={() => updateActiveCell(0)}>
 						Clear
 					</Button>
 				</GridItem>
 			</Grid>
 			<Flex w="100%" justify="space-between">
-				<Button colorScheme="green" onClick={() => handleGameEnd()}>
-					Check Correctness
-				</Button>
-				<Button colorScheme="orange" onClick={() => undo()}>
-					Undo
-				</Button>
+				<Box w="100%">
+					<Button w="100%" colorScheme="green" onClick={() => handleGameEnd()}>
+						Check Correctness <RiCheckDoubleFill style={{ marginLeft: "0.2em" }} size="1.3em" />
+					</Button>
+					<Flex mt="0.5em" w="100%">
+						<Button w="100%" colorScheme="orange" onClick={() => undo()}>
+							Undo <RiArrowGoBackLine style={{ marginLeft: "0.2em" }} size="0.9em" />
+						</Button>
+						<Button ml="0.5em" w="100%" colorScheme="purple" onClick={() => redo()}>
+							<RiArrowGoForwardLine style={{ marginRight: "0.2em" }} size="0.9em" />
+							Redo
+						</Button>
+					</Flex>
+				</Box>
 			</Flex>
 		</Flex>
 	);
